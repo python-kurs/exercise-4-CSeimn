@@ -3,16 +3,24 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 # Import both data tables into python using pandas. Set the index column to "MESS_DATUM" and parse the column values as dates. [1P]
-garmisch  = 
-zugspitze = 
+garmisch  = pd.read_csv("C:/Users/CSeimn/Documents/Master/2._Semester/Python_Kurs/exercise-4-CSeimn/data/produkt_klima_tag_20171010_20190412_01550.txt",
+                        parse_dates = ["MESS_DATUM"],
+                        index_col = "MESS_DATUM",
+                        sep = ";",
+                        na_values = "")
+zugspitze = pd.read_csv("C:/Users/CSeimn/Documents/Master/2._Semester/Python_Kurs/exercise-4-CSeimn/data/produkt_klima_tag_20171010_20190412_05792.txt",
+                        parse_dates = ["MESS_DATUM"],
+                        index_col = "MESS_DATUM",
+                        sep = ";",
+                        na_values = "")
 
 # Clip the tables to the year 2018: [1P]
-garmisch  = 
-zugspitze = 
+garmisch  = garmisch.loc["2018"]
+zugspitze = zugspitze.loc["2018"]
 
 # Resample the temperature data to monthly averages (" TMK") and store them in simple lists: [1P]
-garmisch_agg  = 
-zugspitze_agg = 
+garmisch_agg  = garmisch.loc[:, ["TMK"]].resample("M").agg({"TMK": "mean"})
+zugspitze_agg = zugspitze.loc[:, ["TMK"]].resample("M").agg({"TMK": "mean"})
 
 # Define a plotting function that draws a simple climate diagram
 # Add the arguments as mentioned in the docstring below [1P]
